@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private SoundManager _soundManager;
+    [SerializeField] private AudioList _audioList;
     [SerializeField] private PlayerCharacterData _playerCharacterData;
     [SerializeField] private List<CharacterData> _characterDataList;
     [SerializeField] private ColorUtilities _colorUtilities;
@@ -37,9 +37,9 @@ public class GameManager : MonoBehaviour
         return _sortOrderUtilities;
     }
 
-    public SoundManager GetSoundManager()
+    public AudioList GetAudioList()
     {
-        return _soundManager;
+        return _audioList;
     }
 
     public List<CharacterData> GetCharacterDataList()

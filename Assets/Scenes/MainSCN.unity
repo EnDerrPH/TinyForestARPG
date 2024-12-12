@@ -3328,6 +3328,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 517492392429953269, guid: 6c415c0e2f633444eb6a62f17468fc43, type: 3}
+      propertyPath: _audioList
+      value: 
+      objectReference: {fileID: 11400000, guid: 5af94639ff913364fb963ac6345a0533, type: 2}
+    - target: {fileID: 517492392429953269, guid: 6c415c0e2f633444eb6a62f17468fc43, type: 3}
       propertyPath: _playerCharacterData
       value: 
       objectReference: {fileID: 11400000, guid: 780329f840a98264daf619b3be91191b, type: 2}
