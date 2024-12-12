@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc448948fd4f704c9e7edc68cd6abd9, type: 3}
+  m_Name: SwordsMan
+  m_EditorClassIdentifier: 
+  _characterClass: 1
+  _animatorController: {fileID: 22100000, guid: 37fe8a7273f0e1d46bb9631d3b01b2b8, type: 2}
+  _characterHitPrefab: {fileID: 1850048158912854168, guid: 782d9c217a57dc74584ee6308f2661bc, type: 3}
+  _description: Close range character that has high survivability rate.
+  _characterLevel: 1
+  _statPoints: 0
+  _skillPoints: 0
+  _currentExperience: 0
+  _nextLevelExperience: 300
+  _characterHP: 100
+  _characterStrength: 5
+  _characterVitality: 10
+  _characterLuck: 1
+  _startingSprite: {fileID: 4334783836991956000, guid: beedf59b59888fc44862ca31f5cf50c7, type: 3}
+  _dashUp: {fileID: 4425439098077930050, guid: beedf59b59888fc44862ca31f5cf50c7, type: 3}
+  _dashDown: {fileID: -2812111548000859311, guid: beedf59b59888fc44862ca31f5cf50c7, type: 3}
+  _dashLeft: {fileID: 7567997991750803234, guid: 47ec8584053f05943ab295f783ee16f4, type: 3}
+  _dashRight: {fileID: 8871532568298537163, guid: beedf59b59888fc44862ca31f5cf50c7, type: 3}

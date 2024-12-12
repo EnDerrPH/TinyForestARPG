@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc448948fd4f704c9e7edc68cd6abd9, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: 
+  _characterClass: 0
+  _animatorController: {fileID: 22100000, guid: d0ea4880769cbbe4496c1e31b0466fdb, type: 2}
+  _characterHitPrefab: {fileID: 1053372128219707650, guid: 97185a05de2fc344d86d5fbb7b868ef3, type: 3}
+  _description: A long range character that has high Damage but average in defense.
+  _characterLevel: 1
+  _statPoints: 0
+  _skillPoints: 0
+  _currentExperience: 0
+  _nextLevelExperience: 300
+  _characterHP: 50
+  _characterStrength: 10
+  _characterVitality: 1
+  _characterLuck: 10
+  _attackPower: 50
+  _criticalChance: 3
+  _criticalDamage: 3
+  _defense: 1
+  _lifeRegeneration: 0.02
+  _startingSprite: {fileID: 21300000, guid: d3fc86e87ed624cd4b99f41839d07872, type: 3}
+  _dashUp: {fileID: -6346353754825887778, guid: 2a39d1b36efff405c9fa9eea030081b5, type: 3}
+  _dashDown: {fileID: 21300000, guid: 8d49905babc88495495ad3a6f7fce288, type: 3}
+  _dashLeft: {fileID: 21300000, guid: 028b388b20d59b747981cce2bc13974f, type: 3}
+  _dashRight: {fileID: 21300000, guid: 82de06744ccd74b2cb215461eafffad7, type: 3}

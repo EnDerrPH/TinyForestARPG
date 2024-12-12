@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1823a2067a93a459ce96fb37711b64, type: 3}
+  m_Name: PlayerCharacterData
+  m_EditorClassIdentifier: 
+  _characterData: {fileID: 11400000, guid: 00a4da19cb8ae1c4fbb078b691a3a578, type: 2}
+  _playerName: 
+  _characterLevel: 1
+  _statPoints: 5
+  _skillPoints: 1
+  _currentHP: 50
+  _currentExperience: 0
+  _nextLevelExperience: 300
+  _characterMaxHP: 50
+  _characterStrength: 10
+  _characterVitality: 1
+  _characterLuck: 10
+  _attackPower: 50
+  _criticalChance: 3
+  _criticalDamage: 3
+  _defense: 1
+  _lifeRegeneration: 0.02
