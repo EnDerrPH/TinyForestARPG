@@ -144,6 +144,7 @@ public class CharacterController : LivingObjects
                     CreateDashClone(_dashRight, sortingNumber);
                     break;
             }
+            PlayOneShot(.3f,_characterData.DashAudio);
             OnDashEvent.Invoke();
         }
     }
