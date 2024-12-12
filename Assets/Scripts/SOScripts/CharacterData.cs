@@ -30,6 +30,11 @@ public class CharacterData : ScriptableObject
     [SerializeField] private Sprite _dashLeft;
     [SerializeField] private Sprite _dashRight;
     #endregion
+    #region Audio
+    [Header("Audio")]
+    [SerializeField] protected AudioClip _attackAudio;
+    [SerializeField] protected AudioClip _dashAudio;
+    #endregion
     #region Get/Set
     public int HP { get => _characterHP; set { _characterHP = value; } }
     public int Strength { get => _characterStrength; set { _characterStrength = value; } }
@@ -44,6 +49,8 @@ public class CharacterData : ScriptableObject
     public Sprite DashLeft { get => _dashLeft; set { _dashLeft = value; } }
     public Sprite DashRight { get => _dashRight; set { _dashRight = value; } }
     public string Description { get => _description; set { _description = value; } }
+    public AudioClip AttackAudio => _attackAudio;
+    public AudioClip DashAudio => _dashAudio;
     #endregion
 
     public RuntimeAnimatorController GetCharacterController()
