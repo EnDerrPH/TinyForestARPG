@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BG Forest no trees_0: 4710973894351915436
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
