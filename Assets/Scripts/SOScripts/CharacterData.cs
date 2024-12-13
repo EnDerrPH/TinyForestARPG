@@ -32,8 +32,10 @@ public class CharacterData : ScriptableObject
     #endregion
     #region Audio
     [Header("Audio")]
-    [SerializeField] protected AudioClip _attackAudio;
-    [SerializeField] protected AudioClip _dashAudio;
+    [SerializeField] protected AudioClip _attackSFX;
+    [SerializeField] protected AudioClip _dashSFX;
+    [SerializeField] protected AudioClip _step1SFX;
+    [SerializeField] protected AudioClip _step2SFX;
     #endregion
     #region Get/Set
     public int HP { get => _characterHP; set { _characterHP = value; } }
@@ -49,8 +51,10 @@ public class CharacterData : ScriptableObject
     public Sprite DashLeft { get => _dashLeft; set { _dashLeft = value; } }
     public Sprite DashRight { get => _dashRight; set { _dashRight = value; } }
     public string Description { get => _description; set { _description = value; } }
-    public AudioClip AttackAudio => _attackAudio;
-    public AudioClip DashAudio => _dashAudio;
+    public AudioClip AttackSFX => _attackSFX;
+    public AudioClip DashSFX => _dashSFX;
+    public AudioClip Step1SFX => _step1SFX;
+    public AudioClip Step2SFX => _step2SFX;
     #endregion
 
     public RuntimeAnimatorController GetCharacterController()
