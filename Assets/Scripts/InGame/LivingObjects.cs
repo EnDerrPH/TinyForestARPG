@@ -69,7 +69,7 @@ public class LivingObjects : MonoBehaviour
         }
         if(Mouse.current.leftButton.wasPressedThisFrame)
         {
-            PlayOneShot(1f,_characterData.AttackAudio);
+            PlayOneShot(1f,_characterData.AttackSFX);
             _objectAnimator.SetBool("NormalAttack", true); 
             _moveSpeed = 0f;
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -117,6 +117,7 @@ public class LivingObjects : MonoBehaviour
 
     public virtual void PlayOneShot(float volume , AudioClip audioClip)
     {
+        _audioSource.Stop();
         _audioSource.volume = volume;
         _audioSource.PlayOneShot(audioClip);
     }

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cb00ab66f2e994b9bc1854c24108a5, type: 3}
   m_Name: AudioList
   m_EditorClassIdentifier: 
-  _arrowRelease: {fileID: 8300000, guid: 8972605792be9074ba1378d0aea08f0a, type: 3}
+  _MainMenuBGM: {fileID: 8300000, guid: e46bc2a19b05ad945be28d5884a84c6b, type: 3}
+  _forestBGM: {fileID: 8300000, guid: 3a18d03c0d889a946a57fece6567503f, type: 3}

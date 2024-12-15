@@ -191,6 +191,7 @@ public class EnemyController : LivingObjects
     {
         if(col.gameObject.tag == "Weapon")
         {
+            PlayOneShot(1f,_enemyData.HitSFX);
             _moveSpeed = 0f;
             int damageReceive = (int)_playerCharacterData.AttackPower;
             CalculateDamageRecieve(damageReceive);

@@ -13,7 +13,6 @@ public class CharacterController : LivingObjects
     [SerializeField] private SkillSlotHandler _SkillSlot;   
     protected Vector3 _moveInput;
     private ActionInput _actionInput;
-    private bool _isMoving;
     public UnityEvent OnDashEvent;
  
     public override void Start()
@@ -26,9 +25,7 @@ public class CharacterController : LivingObjects
     public override void Update()
     {
         base.Update();
-        CheckIfMoving();
     }
-
     private void SetPlayerCharacterData()
     {
         PlayerCharacterData playerCharacterData =  GameManager.instance.PlayerCharacterData;
@@ -63,17 +60,6 @@ public class CharacterController : LivingObjects
         _moveSpeed =  8f;
     }
 
-
-    private void CheckIfMoving()
-    {
-        if(_moveInput.x == 0 && _moveInput.y == 0)
-        {
-            _isMoving = false;
-            return;
-        }
-        _isMoving = true;
-    }
-
     public override void OnMove()
     {
         if(_objectAnimator.GetBool("NormalAttack"))
@@ -93,6 +79,10 @@ public class CharacterController : LivingObjects
         _rb.MovePosition(_rb.position + movement);
         SetCharacterAngle();
         _sortOrderUtilities.SetSortOrder(this.gameObject);
+        if (movement.magnitude > 0)
+        {
+            PlayFootstepSound();
+        }
     }
 
     private void SetCharacterAngle()
@@ -144,7 +134,7 @@ public class CharacterController : LivingObjects
                     CreateDashClone(_dashRight, sortingNumber);
                     break;
             }
-            PlayOneShot(.3f,_characterData.DashAudio);
+            PlayOneShot(1f,_characterData.DashSFX);
             OnDashEvent.Invoke();
         }
     }
@@ -171,6 +161,24 @@ public class CharacterController : LivingObjects
             {
                 sortingNumber += 1;
             }
+        }
+    }
+
+    private void PlayFootstepSound()
+    {
+        if (!_audioSource.isPlaying)  // Ensure the previous step sound isn't still playing
+        {
+            // Alternate between the two step sounds
+            if (Random.value > 0.5f)  // Randomly choose the clip to play
+            {
+                _audioSource.clip = _characterData.Step1SFX;
+            }
+            else
+            {
+                _audioSource.clip = _characterData.Step2SFX;
+            }
+            _audioSource.volume = .2f;
+            _audioSource.Play();
         }
     }
 

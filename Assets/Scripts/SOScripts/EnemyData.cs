@@ -9,11 +9,13 @@ public class EnemyData : ScriptableObject
     [SerializeField] private int _experience;
     [SerializeField] private Sprite _startingSprite;
     [SerializeField] private RuntimeAnimatorController _animatorController;
+    [SerializeField] AudioClip _hitSFX;
 
     public int HP { get => _HP; set { _HP = value; } }
     public int Damage { get => _damage; set { _damage = value; } }
     public int Defence { get => _defense; set { _defense = value; } }
     public int Experience { get => _experience; set { _experience = value; } }
     public Sprite StartingSprite => _startingSprite;
+    public AudioClip HitSFX => _hitSFX;
     public RuntimeAnimatorController AnimatorController => _animatorController;
 }
