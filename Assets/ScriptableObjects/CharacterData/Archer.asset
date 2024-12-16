@@ -25,13 +25,12 @@ MonoBehaviour:
   _characterStrength: 10
   _characterVitality: 1
   _characterLuck: 10
-  _attackPower: 50
-  _criticalChance: 3
-  _criticalDamage: 3
-  _defense: 1
-  _lifeRegeneration: 0.02
   _startingSprite: {fileID: 21300000, guid: d3fc86e87ed624cd4b99f41839d07872, type: 3}
   _dashUp: {fileID: -6346353754825887778, guid: 2a39d1b36efff405c9fa9eea030081b5, type: 3}
   _dashDown: {fileID: 21300000, guid: 8d49905babc88495495ad3a6f7fce288, type: 3}
   _dashLeft: {fileID: 21300000, guid: 028b388b20d59b747981cce2bc13974f, type: 3}
   _dashRight: {fileID: 21300000, guid: 82de06744ccd74b2cb215461eafffad7, type: 3}
+  _attackSFX: {fileID: 8300000, guid: 8972605792be9074ba1378d0aea08f0a, type: 3}
+  _dashSFX: {fileID: 8300000, guid: d004d6aec45096c4d92c70c62daab23d, type: 3}
+  _step1SFX: {fileID: 8300000, guid: 39cd0b4a0b53b9746891007dfecd673f, type: 3}
+  _step2SFX: {fileID: 8300000, guid: 351758301403c4a43ba097600f4f9d0a, type: 3}

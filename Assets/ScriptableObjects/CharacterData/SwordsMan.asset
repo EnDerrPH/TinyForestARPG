@@ -22,7 +22,7 @@ MonoBehaviour:
   _currentExperience: 0
   _nextLevelExperience: 300
   _characterHP: 100
-  _characterStrength: 5
+  _characterStrength: 7
   _characterVitality: 10
   _characterLuck: 1
   _startingSprite: {fileID: 4334783836991956000, guid: beedf59b59888fc44862ca31f5cf50c7, type: 3}
@@ -30,3 +30,7 @@ MonoBehaviour:
   _dashDown: {fileID: -2812111548000859311, guid: beedf59b59888fc44862ca31f5cf50c7, type: 3}
   _dashLeft: {fileID: 7567997991750803234, guid: 47ec8584053f05943ab295f783ee16f4, type: 3}
   _dashRight: {fileID: 8871532568298537163, guid: beedf59b59888fc44862ca31f5cf50c7, type: 3}
+  _attackSFX: {fileID: 8300000, guid: 16f7b892ca449c244bf804e27ac86f95, type: 3}
+  _dashSFX: {fileID: 8300000, guid: d004d6aec45096c4d92c70c62daab23d, type: 3}
+  _step1SFX: {fileID: 8300000, guid: 39cd0b4a0b53b9746891007dfecd673f, type: 3}
+  _step2SFX: {fileID: 8300000, guid: 351758301403c4a43ba097600f4f9d0a, type: 3}

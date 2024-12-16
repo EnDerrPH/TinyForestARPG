@@ -5,6 +5,8 @@ public class LivingObjects : MonoBehaviour
 {
     [SerializeField] protected GameObject _classHitPrefab;
     [SerializeField] protected float _moveSpeed;
+    protected CharacterData _characterData;
+    protected AudioSource _audioSource;
     protected int _hp;
     protected Animator _objectAnimator;
     protected Rigidbody2D _rb;
@@ -48,8 +50,10 @@ public class LivingObjects : MonoBehaviour
     private void SetObjectData()
     {
         _objectAnimator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
         _sortOrderUtilities = GameManager.instance.GetSortOrderUtilities();
         _rb = GetComponent<Rigidbody2D>();
+        _characterData = GameManager.instance.PlayerCharacterData.CharacterData;
     }
 
     public virtual void OnMove()
@@ -65,6 +69,7 @@ public class LivingObjects : MonoBehaviour
         }
         if(Mouse.current.leftButton.wasPressedThisFrame)
         {
+            PlayOneShot(1f,_characterData.AttackSFX);
             _objectAnimator.SetBool("NormalAttack", true); 
             _moveSpeed = 0f;
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -109,4 +114,12 @@ public class LivingObjects : MonoBehaviour
     {
 
     }
+
+    public virtual void PlayOneShot(float volume , AudioClip audioClip)
+    {
+        _audioSource.Stop();
+        _audioSource.volume = volume;
+        _audioSource.PlayOneShot(audioClip);
+    }
+
 }

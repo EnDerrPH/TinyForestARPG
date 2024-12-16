@@ -18,3 +18,4 @@ MonoBehaviour:
   _experience: 100
   _startingSprite: {fileID: 21300000, guid: 7cefe9e9e8c984bbd9ff43235be8f54f, type: 3}
   _animatorController: {fileID: 22100000, guid: 78873539e52a0054c80288b105705371, type: 2}
+  _hitSFX: {fileID: 8300000, guid: b6131b4747c00b2458418eb091c7d20e, type: 3}
