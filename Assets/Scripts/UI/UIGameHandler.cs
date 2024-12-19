@@ -12,8 +12,9 @@ public class UIGameHandler : UIHandler
     [SerializeField] private GameObject _skillUI;
     [SerializeField] private Image _expFillBar;
     [SerializeField] private Image _hpFillBar;
-    [SerializeField] private TMP_Text _ExpPercentageText;
-    [SerializeField] private TMP_Text _LevelText;
+    [SerializeField] private TMP_Text _expPercentageText;
+    [SerializeField] private TMP_Text _playerName;
+    [SerializeField] private TMP_Text _levelText;
     [SerializeField] private Button _statButton;
     [SerializeField] private Button _skillButton;
     [SerializeField] private List<EnemyController> _enemyList = new List<EnemyController>();
@@ -37,7 +38,9 @@ public class UIGameHandler : UIHandler
     private void SetUIData()
     {
         _playerCharacterData = GameManager.instance.PlayerCharacterData;
+        _playerName.text = _playerCharacterData.PlayerName;
         UpdateExperience();
+        UpdatePlayerLevel();
         UpdateHealth();
     }
 
@@ -46,7 +49,7 @@ public class UIGameHandler : UIHandler
         float experience = (_playerCharacterData.CurrentExperience / _playerCharacterData.NextLevelExperience) * 100;
         float expFillBar = experience * .01f;
         _expFillBar.fillAmount = expFillBar;
-        _ExpPercentageText.text = experience.ToString("F2") + "%";  
+        _expPercentageText.text = experience.ToString("F2") + "%";  
     }
 
     private void UpdateHealth()
@@ -61,7 +64,7 @@ public class UIGameHandler : UIHandler
         UpdateExperience();
         _statButton.gameObject.SetActive(true);
         _skillButton.gameObject.SetActive(true);
-        _LevelText.text = "Lvl " + _playerCharacterData.CharacterLevel.ToString();
+        _levelText.text = "Lv " + _playerCharacterData.CharacterLevel.ToString();
     }
 
     private void SetEnemyList()
