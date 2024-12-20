@@ -45,4 +45,10 @@ public enum SkillSlotType
     ClassSkill,
 }
 
+public enum EnemyState
+{
+    Roaming,
+    Chasing,
+}
+
 
