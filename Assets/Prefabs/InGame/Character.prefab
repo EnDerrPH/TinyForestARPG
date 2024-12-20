@@ -209,6 +209,11 @@ MonoBehaviour:
   _dashRight: {fileID: 0}
   _GlobalSlot: {fileID: 0}
   _SkillSlot: {fileID: 0}
+  _breadCrumbsList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   OnDashEvent:
     m_PersistentCalls:
       m_Calls: []

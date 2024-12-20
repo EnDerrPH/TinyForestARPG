@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System.Collections.Generic;
 public class CharacterController : LivingObjects
 {
     [SerializeField] protected float _dashPower;
@@ -11,9 +12,15 @@ public class CharacterController : LivingObjects
     [SerializeField] protected Sprite _dashRight;
     [SerializeField] private SkillSlotHandler _GlobalSlot;
     [SerializeField] private SkillSlotHandler _SkillSlot;   
+    [SerializeField] private List<GameObject> _breadCrumbsList = new List<GameObject>();
     protected Vector3 _moveInput;
+    protected Vector2 _lastPosition;
+    protected float _stepInterval = .15f;
+    protected int _breadCrumbStartingNumber = 0;
     private ActionInput _actionInput;
     public UnityEvent OnDashEvent;
+
+    public List<GameObject> BreadCrumbsList => _breadCrumbsList;
  
     public override void Start()
     {
@@ -76,12 +83,20 @@ public class CharacterController : LivingObjects
         SetObjectAnimatorFloat(_moveInput.x, _moveInput.y);
         Vector2 movement = _moveInput * _moveSpeed;
         movement *= Time.deltaTime;
+        _lastPosition = movement;
         _rb.MovePosition(_rb.position + movement);
         SetCharacterAngle();
         _sortOrderUtilities.SetSortOrder(this.gameObject);
         if (movement.magnitude > 0)
         {
             PlayFootstepSound();
+            _stepInterval -= Time.deltaTime;
+            if(_stepInterval <= 0f)
+            {
+                _lastPosition = this.transform.position;
+                DropBreadCrumbs();
+                _stepInterval = .15f;
+            }
         }
     }
 
@@ -179,6 +194,16 @@ public class CharacterController : LivingObjects
             }
             _audioSource.volume = .2f;
             _audioSource.Play();
+        }
+    }
+
+    private void DropBreadCrumbs()
+    {
+        _breadCrumbsList[_breadCrumbStartingNumber].transform.position = _lastPosition;
+        _breadCrumbStartingNumber += 1;
+        if(_breadCrumbStartingNumber >= _breadCrumbsList.Count)
+        {
+            _breadCrumbStartingNumber = 0;
         }
     }
 

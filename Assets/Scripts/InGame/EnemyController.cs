@@ -6,21 +6,27 @@ public class EnemyController : LivingObjects
 {
     [SerializeField] private EnemyData _enemyData;
     [SerializeField] private Transform _damagePopUp;
+    private CharacterController _characterController;
+    private Transform _playerTransform;
     private SpriteRenderer _spriteRenderer;
     private MapHandler _mapHandler;
     private Vector2 _moveDirection;
-    private float _changeDirectionTime = 2f;
-    private float _timeToChangeDirection;
+    private float _timeToChangeDirection = 2f;
+    private float _chaseRange = 8f;
     private Bounds _tilemapBounds;
+    private Vector2 _breadCrumbPosition;
     private Vector2 _targetPosition;
     private Vector2 lastPosition;
+    private Vector2 _playerPosition;
     private bool _isDissolveOut;
     private bool _isDissolveIn = true;
     private Collider2D _boxCollider;
     private float _dissolveAmount = 2f;
     private float _dissolveTimer = .7f;
+    private int _breadCrumbsCount = 0;
     private Renderer _renderer;
     private PlayerCharacterData _playerCharacterData;
+    private EnemyState _enemyState;
     public UnityEvent OnDeathEvent;
     public EnemyData EnemyData { get => _enemyData; set { _enemyData = value; } }
     public int HP { get =>_hp; set {_hp = value; } }
@@ -28,6 +34,7 @@ public class EnemyController : LivingObjects
     public override void Start()
     {
         base.Start();
+        SetPlayerData();
         SetEnemyData();
         SetRandomDirection();
     }
@@ -52,22 +59,49 @@ public class EnemyController : LivingObjects
 
     public override void OnMove()
     {
-        _targetPosition = _rb.position + _moveDirection * _moveSpeed * Time.deltaTime;
-
-        _targetPosition.x = Mathf.Clamp(_targetPosition.x, _tilemapBounds.min.x, _tilemapBounds.max.x);
-        _targetPosition.y = Mathf.Clamp(_targetPosition.y, _tilemapBounds.min.y, _tilemapBounds.max.y);
-        
+        CheckPlayerDistance();
+        if(_enemyState == EnemyState.Roaming)
+        {
+            _targetPosition = _rb.position + _moveDirection * _moveSpeed * Time.deltaTime;
+            _targetPosition.x = Mathf.Clamp(_targetPosition.x, _tilemapBounds.min.x, _tilemapBounds.max.x);
+            _targetPosition.y = Mathf.Clamp(_targetPosition.y, _tilemapBounds.min.y, _tilemapBounds.max.y); 
+        }
+        else
+        {
+            _breadCrumbPosition = _characterController.BreadCrumbsList[_breadCrumbsCount].transform.position;
+            _targetPosition = Vector2.MoveTowards(_rb.position, _breadCrumbPosition, _moveSpeed * Time.deltaTime);
+        }
 
         _rb.MovePosition(_targetPosition);
         _sortOrderUtilities.SetSortOrder(this.gameObject);
         Vector2 velocity = (_rb.position - lastPosition) / Time.fixedDeltaTime;
-
         lastPosition = _rb.position;
 
         float xValue = Mathf.Clamp(velocity.x, -1f, 1f);
         float yValue = Mathf.Clamp(velocity.y, -1f, 1f);
 
         SetObjectAnimatorFloat(xValue, yValue);
+        if(_targetPosition == _breadCrumbPosition)
+        {
+            _breadCrumbsCount += 1;
+            if(_breadCrumbsCount >= _characterController.BreadCrumbsList.Count)
+            {
+                _breadCrumbsCount = 0;
+            }
+        }
+    }
+
+    private void CheckPlayerDistance()
+    {
+        float playerRange = Vector2.Distance(_playerTransform.position , this.transform.position);
+        _enemyState = playerRange <= _chaseRange? EnemyState.Chasing : EnemyState.Roaming;
+    }
+
+    private void SetPlayerData()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        _playerTransform = playerObj.transform;
+        _characterController = playerObj.GetComponent<CharacterController>();
     }
 
     private void SetEnemyData()
@@ -77,7 +111,6 @@ public class EnemyController : LivingObjects
         lastPosition = _rb.position;
         TilemapRenderer tilemapRenderer = GameObject.FindGameObjectWithTag("Tilemap").GetComponent<TilemapRenderer>();
         _tilemapBounds = tilemapRenderer.bounds;
-        _timeToChangeDirection = _changeDirectionTime;
         _boxCollider = GetComponent<BoxCollider2D>();
         _renderer = GetComponent<Renderer>();
         _playerCharacterData = GameManager.instance.PlayerCharacterData;
@@ -85,6 +118,7 @@ public class EnemyController : LivingObjects
         _objectAnimator.runtimeAnimatorController = _enemyData.AnimatorController;
         _hp = _enemyData.HP;
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _enemyState = EnemyState.Roaming;
     }
 
     private void SetMoveSpeed(float speed)
@@ -165,7 +199,7 @@ public class EnemyController : LivingObjects
         if (_timeToChangeDirection <= 0f)
         {
             SetRandomDirection();
-            _timeToChangeDirection = _changeDirectionTime;
+            _timeToChangeDirection = 2f;
         }
     }
 
