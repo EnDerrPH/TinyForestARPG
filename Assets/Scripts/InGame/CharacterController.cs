@@ -200,6 +200,7 @@ public class CharacterController : LivingObjects
     private void DropBreadCrumbs()
     {
         _breadCrumbsList[_breadCrumbStartingNumber].transform.position = _lastPosition;
+        _breadCrumbsList[_breadCrumbStartingNumber].gameObject.SetActive(true);
         _breadCrumbStartingNumber += 1;
         if(_breadCrumbStartingNumber >= _breadCrumbsList.Count)
         {

@@ -70,6 +70,11 @@ public class EnemyController : LivingObjects
         {
             _breadCrumbPosition = _characterController.BreadCrumbsList[_breadCrumbsCount].transform.position;
             _targetPosition = Vector2.MoveTowards(_rb.position, _breadCrumbPosition, _moveSpeed * Time.deltaTime);
+           float breadCrumbDistance = Vector2.Distance(this.transform.position,_breadCrumbPosition);
+           if(breadCrumbDistance <= 1f)
+           {
+                _characterController.BreadCrumbsList[_breadCrumbsCount].gameObject.SetActive(false);
+           }
         }
 
         _rb.MovePosition(_targetPosition);
