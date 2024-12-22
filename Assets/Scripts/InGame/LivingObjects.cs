@@ -47,7 +47,7 @@ public class LivingObjects : MonoBehaviour
         OnMove();
     }
 
-    private void SetObjectData()
+    public virtual void SetObjectData()
     {
         _objectAnimator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();

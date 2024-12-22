@@ -49,6 +49,7 @@ public enum EnemyState
 {
     Roaming,
     Chasing,
+    Attacking,
 }
 
 

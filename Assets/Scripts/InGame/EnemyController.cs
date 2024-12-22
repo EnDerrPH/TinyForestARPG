@@ -11,13 +11,13 @@ public class EnemyController : LivingObjects
     private SpriteRenderer _spriteRenderer;
     private MapHandler _mapHandler;
     private Vector2 _moveDirection;
-    private float _timeToChangeDirection = 2f;
+    private float _timeToChangeDirection = 4f;
     private float _chaseRange = 8f;
+    private float _playerDistance;
     private Bounds _tilemapBounds;
     private Vector2 _breadCrumbPosition;
     private Vector2 _targetPosition;
     private Vector2 lastPosition;
-    private Vector2 _playerPosition;
     private bool _isDissolveOut;
     private bool _isDissolveIn = true;
     private Collider2D _boxCollider;
@@ -33,7 +33,7 @@ public class EnemyController : LivingObjects
 
     public override void Start()
     {
-        base.Start();
+        SetObjectData();
         SetPlayerData();
         SetEnemyData();
         SetRandomDirection();
@@ -52,6 +52,11 @@ public class EnemyController : LivingObjects
         OnMove();
     }
 
+    public override void AddListener()
+    {
+        _characterController.OnMovementEvent.AddListener(CheckPlayerDistance);
+    }
+
     public override void OnAttack()
     {
         
@@ -59,7 +64,10 @@ public class EnemyController : LivingObjects
 
     public override void OnMove()
     {
-        CheckPlayerDistance();
+        if(_enemyState == EnemyState.Attacking)
+        {
+            return;
+        }
         if(_enemyState == EnemyState.Roaming)
         {
             _targetPosition = _rb.position + _moveDirection * _moveSpeed * Time.deltaTime;
@@ -77,6 +85,7 @@ public class EnemyController : LivingObjects
            }
         }
 
+     
         _rb.MovePosition(_targetPosition);
         _sortOrderUtilities.SetSortOrder(this.gameObject);
         Vector2 velocity = (_rb.position - lastPosition) / Time.fixedDeltaTime;
@@ -98,8 +107,19 @@ public class EnemyController : LivingObjects
 
     private void CheckPlayerDistance()
     {
-        float playerRange = Vector2.Distance(_playerTransform.position , this.transform.position);
-        _enemyState = playerRange <= _chaseRange? EnemyState.Chasing : EnemyState.Roaming;
+        _playerDistance = Vector2.Distance(_playerTransform.position , this.transform.position);
+        if(_playerDistance <= 1f)
+        {
+            _enemyState = EnemyState.Attacking;
+        }
+        if(_playerDistance <= 5f && _playerDistance > 1f)
+        {
+            _enemyState = EnemyState.Chasing;
+        }
+        if(_playerDistance > 5f)
+        {
+            _enemyState = EnemyState.Roaming;
+        }
     }
 
     private void SetPlayerData()
@@ -107,6 +127,7 @@ public class EnemyController : LivingObjects
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         _playerTransform = playerObj.transform;
         _characterController = playerObj.GetComponent<CharacterController>();
+        AddListener();
     }
 
     private void SetEnemyData()
@@ -235,6 +256,12 @@ public class EnemyController : LivingObjects
             int damageReceive = (int)_playerCharacterData.AttackPower;
             CalculateDamageRecieve(damageReceive);
             CheckHP();
+        }
+
+        if(col.gameObject.tag == "Player")
+        {
+            _enemyState = EnemyState.Attacking;
+            Debug.Log("Attacking");
         }
     }
 }

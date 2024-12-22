@@ -18,8 +18,7 @@ public class CharacterController : LivingObjects
     protected float _stepInterval = .15f;
     protected int _breadCrumbStartingNumber = 0;
     private ActionInput _actionInput;
-    public UnityEvent OnDashEvent;
-
+    public UnityEvent OnDashEvent, OnMovementEvent;
     public List<GameObject> BreadCrumbsList => _breadCrumbsList;
  
     public override void Start()
@@ -89,6 +88,7 @@ public class CharacterController : LivingObjects
         _sortOrderUtilities.SetSortOrder(this.gameObject);
         if (movement.magnitude > 0)
         {
+            OnMovementEvent.Invoke();
             PlayFootstepSound();
             _stepInterval -= Time.deltaTime;
             if(_stepInterval <= 0f)
