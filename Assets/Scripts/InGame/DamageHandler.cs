@@ -19,6 +19,16 @@ public abstract class DamageHandler : MonoBehaviour
         DestroySelf();
     }
 
+    public void TakeDamage(int hp , int damage)
+    {
+        hp -= damage;
+    }
+
+    public void InflictDamage()
+    {
+
+    }
+
     public void DestroySelf()
     {
         _destroyTimer -= Time.deltaTime;

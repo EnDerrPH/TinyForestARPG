@@ -79,7 +79,7 @@ public class SpawnManagerHandler : MonoBehaviour
     {
         foreach(EnemyController enemy in _enemyList)
         {
-            if(enemy.HP <= 0)
+            if(enemy.CurrentHP <= 0)
             {
                 _enemyList.Remove(enemy);
                 break;

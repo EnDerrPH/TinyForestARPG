@@ -42,12 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveAmount: 1
-    - _OutlineThickness: 0.137
+    - _DissolveAmount: 0.977
+    - _OutlineThickness: 0.105
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _OutlineColor: {r: 0.027450979, g: 0.6909716, b: 0.85882354, a: 1}
+    - _OutlineColor: {r: 0.8018868, g: 0.02647741, b: 0.034227613, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &436601478745867728

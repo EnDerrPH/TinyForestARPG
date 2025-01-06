@@ -18,7 +18,7 @@ public class UIGameHandler : UIHandler
     [SerializeField] private Button _statButton;
     [SerializeField] private Button _skillButton;
     [SerializeField] private List<EnemyController> _enemyList = new List<EnemyController>();
-    private int _currentHP = 0;
+    private CharacterController _characterController;
     private PlayerCharacterData _playerCharacterData;
 
     public override void Start()
@@ -37,6 +37,7 @@ public class UIGameHandler : UIHandler
 
     private void SetUIData()
     {
+        _characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         _playerCharacterData = GameManager.instance.PlayerCharacterData;
         _playerName.text = _playerCharacterData.PlayerName;
         UpdateExperience();
@@ -54,8 +55,10 @@ public class UIGameHandler : UIHandler
 
     private void UpdateHealth()
     {
-        _currentHP = _playerCharacterData.MaxHP;
-        int health = (_currentHP / _playerCharacterData.MaxHP);
+        Debug.Log(_characterController.CurrentHP);
+        Debug.Log(_playerCharacterData.MaxHP);
+        float health = ((float)_characterController.CurrentHP / (float)_playerCharacterData.MaxHP);
+        Debug.Log(health);
         _hpFillBar.fillAmount = health;
     }
 
@@ -83,6 +86,7 @@ public class UIGameHandler : UIHandler
         _playerCharacterData.OnLevelUpEvent.AddListener(UpdatePlayerLevel);
         _statButton.onClick.AddListener(() => Open(_statUI));
         _skillButton.onClick.AddListener(() => Open(_skillUI));
+        _characterController.OnHitEvent.AddListener(UpdateHealth);
     }
 
 }

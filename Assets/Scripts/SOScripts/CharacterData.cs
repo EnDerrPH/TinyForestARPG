@@ -5,7 +5,7 @@ public class CharacterData : ScriptableObject
 {
     [SerializeField] private CharacterClass _characterClass;
     [SerializeField] private RuntimeAnimatorController _animatorController;
-    [SerializeField] private GameObject _characterHitPrefab;
+    [SerializeField] private HitPrefabHandler _hitPrefab;
     [SerializeField] private string _description;
 
     #region ProgressionStats
@@ -32,10 +32,11 @@ public class CharacterData : ScriptableObject
     #endregion
     #region Audio
     [Header("Audio")]
-    [SerializeField] protected AudioClip _attackSFX;
-    [SerializeField] protected AudioClip _dashSFX;
-    [SerializeField] protected AudioClip _step1SFX;
-    [SerializeField] protected AudioClip _step2SFX;
+    [SerializeField] private AudioClip _attackSFX;
+    [SerializeField] private AudioClip _dashSFX;
+    [SerializeField] private AudioClip _step1SFX;
+    [SerializeField] private AudioClip _step2SFX;
+    [SerializeField] private AudioClip _onHitSFX;
     #endregion
     #region Get/Set
     public int HP { get => _characterHP; set { _characterHP = value; } }
@@ -52,6 +53,7 @@ public class CharacterData : ScriptableObject
     public Sprite DashRight { get => _dashRight; set { _dashRight = value; } }
     public string Description { get => _description; set { _description = value; } }
     public AudioClip AttackSFX => _attackSFX;
+    public AudioClip OnHitSFX => _onHitSFX;
     public AudioClip DashSFX => _dashSFX;
     public AudioClip Step1SFX => _step1SFX;
     public AudioClip Step2SFX => _step2SFX;
@@ -62,8 +64,8 @@ public class CharacterData : ScriptableObject
         return _animatorController;
     }
 
-    public GameObject GetCharacterHit()
+    public HitPrefabHandler GetHitPrefab()
     {
-        return _characterHitPrefab;
+        return _hitPrefab;
     }
 }

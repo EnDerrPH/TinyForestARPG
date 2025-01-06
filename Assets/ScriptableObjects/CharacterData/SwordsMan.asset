@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SwordsMan
   m_EditorClassIdentifier: 
   _characterClass: 1
-  _animatorController: {fileID: 22100000, guid: 37fe8a7273f0e1d46bb9631d3b01b2b8, type: 2}
-  _characterHitPrefab: {fileID: 1850048158912854168, guid: 782d9c217a57dc74584ee6308f2661bc, type: 3}
+  _animatorController: {fileID: 22100000, guid: d34d9488b544f784ca7c6b68517a7295, type: 2}
+  _hitPrefab: {fileID: 576282444405923485, guid: 782d9c217a57dc74584ee6308f2661bc, type: 3}
   _description: Close range character that has high survivability rate.
   _characterLevel: 1
   _statPoints: 0

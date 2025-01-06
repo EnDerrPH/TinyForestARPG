@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using System.Collections.Generic;
-public class CharacterController : LivingObjects
+public class CharacterController : BaseActorHandler
 {
     [SerializeField] protected float _dashPower;
     [SerializeField] protected GameObject _dashGameObject;
@@ -12,14 +12,11 @@ public class CharacterController : LivingObjects
     [SerializeField] protected Sprite _dashRight;
     [SerializeField] private SkillSlotHandler _GlobalSlot;
     [SerializeField] private SkillSlotHandler _SkillSlot;   
-    [SerializeField] private List<GameObject> _breadCrumbsList = new List<GameObject>();
-    protected Vector3 _moveInput;
+    private PlayerCharacterData _playerCharacterData;
     protected Vector2 _lastPosition;
     protected float _stepInterval = .15f;
-    protected int _breadCrumbStartingNumber = 0;
     private ActionInput _actionInput;
-    public UnityEvent OnDashEvent, OnMovementEvent;
-    public List<GameObject> BreadCrumbsList => _breadCrumbsList;
+    public UnityEvent OnDashEvent, OnMovementEvent, OnHitEvent;
  
     public override void Start()
     {
@@ -34,22 +31,22 @@ public class CharacterController : LivingObjects
     }
     private void SetPlayerCharacterData()
     {
-        PlayerCharacterData playerCharacterData =  GameManager.instance.PlayerCharacterData;
-        if(playerCharacterData == null)
+        _playerCharacterData =  GameManager.instance.PlayerCharacterData;
+        if(_playerCharacterData == null)
         {
             return;
         }
         _objectAngle = ObjectAngle.South;
-        playerCharacterData.InitializeStats();
-        playerCharacterData.SetPlayerCharacterStats();
-        playerCharacterData.SetSubStats();
-        _objectAnimator.runtimeAnimatorController = playerCharacterData.CharacterData.GetCharacterController();
-        _classHitPrefab = playerCharacterData.CharacterData.GetCharacterHit();
-        _dashUp = playerCharacterData.CharacterData.DashUp;
-        _dashDown = playerCharacterData.CharacterData.DashDown;
-        _dashLeft = playerCharacterData.CharacterData.DashLeft;
-        _dashRight = playerCharacterData.CharacterData.DashRight;
-        _hp = playerCharacterData.MaxHP;
+        _playerCharacterData.InitializeStats();
+        _playerCharacterData.SetPlayerCharacterStats();
+        _playerCharacterData.SetSubStats();
+        _actorAnimator.runtimeAnimatorController = _playerCharacterData.CharacterData.GetCharacterController();
+        _hitPrefab = _playerCharacterData.CharacterData.GetHitPrefab();
+        _dashUp = _playerCharacterData.CharacterData.DashUp;
+        _dashDown = _playerCharacterData.CharacterData.DashDown;
+        _dashLeft = _playerCharacterData.CharacterData.DashLeft;
+        _dashRight = _playerCharacterData.CharacterData.DashRight;
+        _currentHP = _playerCharacterData.MaxHP;
     }
 
     private void SetActionInput()
@@ -59,16 +56,9 @@ public class CharacterController : LivingObjects
         _actionInput.Player.Dash.performed += OnDash;
     }
 
-    private void SetNormalAttack()
-    {
-        _objectAnimator.SetBool("NormalAttack", false); 
-        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        _moveSpeed =  8f;
-    }
-
     public override void OnMove()
     {
-        if(_objectAnimator.GetBool("NormalAttack"))
+        if(_actorAnimator.GetBool("IsAttacking"))
         {
             return;
         }
@@ -94,30 +84,8 @@ public class CharacterController : LivingObjects
             if(_stepInterval <= 0f)
             {
                 _lastPosition = this.transform.position;
-                DropBreadCrumbs();
                 _stepInterval = .15f;
             }
-        }
-    }
-
-    private void SetCharacterAngle()
-    {
-        if(_moveInput.x > .1f)
-        {
-            _objectAngle = ObjectAngle.East;
-        }
-        else if(_moveInput.x < -.1f)
-        {
-            _objectAngle = ObjectAngle.West;
-        }
-
-        if(_moveInput.y > .1f)
-        {
-            _objectAngle = ObjectAngle.North;
-        }
-        else if(_moveInput.y < -.1f)
-        {
-            _objectAngle = ObjectAngle.South;
         }
     }
 
@@ -197,22 +165,13 @@ public class CharacterController : LivingObjects
         }
     }
 
-    private void DropBreadCrumbs()
-    {
-        _breadCrumbsList[_breadCrumbStartingNumber].transform.position = _lastPosition;
-        _breadCrumbsList[_breadCrumbStartingNumber].gameObject.SetActive(true);
-        _breadCrumbStartingNumber += 1;
-        if(_breadCrumbStartingNumber >= _breadCrumbsList.Count)
-        {
-            _breadCrumbStartingNumber = 0;
-        }
-    }
-
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.collider.tag == "Cave")
+        if(col.collider.tag == "EnemyWeapon")
         {
-           //enter CaveDungeon
+            HitPrefabHandler hitPrefabHandler = col.gameObject.GetComponent<EnemyController>().HitPrefabHandler;
+           _currentHP -= hitPrefabHandler.Damage;
+           OnHitEvent.Invoke();
         }
     }
 }

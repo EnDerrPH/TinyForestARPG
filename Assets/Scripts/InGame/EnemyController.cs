@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 
-public class EnemyController : LivingObjects
+public class EnemyController : BaseActorHandler
 {
     [SerializeField] private EnemyData _enemyData;
     [SerializeField] private Transform _damagePopUp;
@@ -12,10 +12,10 @@ public class EnemyController : LivingObjects
     private MapHandler _mapHandler;
     private Vector2 _moveDirection;
     private float _timeToChangeDirection = 4f;
-    private float _chaseRange = 8f;
+    private float _minimumChaseRange = 2f;
+    private float _maximumChaseRange = 8f;
     private float _playerDistance;
     private Bounds _tilemapBounds;
-    private Vector2 _breadCrumbPosition;
     private Vector2 _targetPosition;
     private Vector2 lastPosition;
     private bool _isDissolveOut;
@@ -23,17 +23,15 @@ public class EnemyController : LivingObjects
     private Collider2D _boxCollider;
     private float _dissolveAmount = 2f;
     private float _dissolveTimer = .7f;
-    private int _breadCrumbsCount = 0;
     private Renderer _renderer;
     private PlayerCharacterData _playerCharacterData;
-    private EnemyState _enemyState;
+    [SerializeField] private EnemyState _enemyState;
     public UnityEvent OnDeathEvent;
     public EnemyData EnemyData { get => _enemyData; set { _enemyData = value; } }
-    public int HP { get =>_hp; set {_hp = value; } }
 
     public override void Start()
     {
-        SetObjectData();
+        base.Start();
         SetPlayerData();
         SetEnemyData();
         SetRandomDirection();
@@ -41,10 +39,10 @@ public class EnemyController : LivingObjects
 
     public override void Update()
     {
-        base.Update();
         DissolveIn();
         DissolveOut();
         SetMovementDirection();
+        CheckPlayerDistance();
     }
 
     public override void FixedUpdate()
@@ -52,14 +50,12 @@ public class EnemyController : LivingObjects
         OnMove();
     }
 
-    public override void AddListener()
-    {
-        _characterController.OnMovementEvent.AddListener(CheckPlayerDistance);
-    }
-
     public override void OnAttack()
     {
-        
+        if(_enemyState == EnemyState.Attacking)
+        {
+            SetAttack(EnemyData.AttackSFX);
+        }
     }
 
     public override void OnMove()
@@ -76,16 +72,9 @@ public class EnemyController : LivingObjects
         }
         else
         {
-            _breadCrumbPosition = _characterController.BreadCrumbsList[_breadCrumbsCount].transform.position;
-            _targetPosition = Vector2.MoveTowards(_rb.position, _breadCrumbPosition, _moveSpeed * Time.deltaTime);
-           float breadCrumbDistance = Vector2.Distance(this.transform.position,_breadCrumbPosition);
-           if(breadCrumbDistance <= 1f)
-           {
-                _characterController.BreadCrumbsList[_breadCrumbsCount].gameObject.SetActive(false);
-           }
+            _targetPosition = Vector2.MoveTowards(_rb.position, _playerTransform.position, _moveSpeed * Time.deltaTime);
         }
 
-     
         _rb.MovePosition(_targetPosition);
         _sortOrderUtilities.SetSortOrder(this.gameObject);
         Vector2 velocity = (_rb.position - lastPosition) / Time.fixedDeltaTime;
@@ -95,14 +84,9 @@ public class EnemyController : LivingObjects
         float yValue = Mathf.Clamp(velocity.y, -1f, 1f);
 
         SetObjectAnimatorFloat(xValue, yValue);
-        if(_targetPosition == _breadCrumbPosition)
-        {
-            _breadCrumbsCount += 1;
-            if(_breadCrumbsCount >= _characterController.BreadCrumbsList.Count)
-            {
-                _breadCrumbsCount = 0;
-            }
-        }
+        Vector2 moveInput = new Vector2(xValue, yValue);
+        _moveInput = moveInput;
+        SetCharacterAngle();
     }
 
     private void CheckPlayerDistance()
@@ -111,14 +95,20 @@ public class EnemyController : LivingObjects
         if(_playerDistance <= 1f)
         {
             _enemyState = EnemyState.Attacking;
+            SetMoveSpeed(0f);
         }
-        if(_playerDistance <= 5f && _playerDistance > 1f)
+
+        if(_playerDistance <= _maximumChaseRange && _playerDistance > _minimumChaseRange)
         {
             _enemyState = EnemyState.Chasing;
+            AttackDone();
+            SetMoveSpeed(5f);
         }
-        if(_playerDistance > 5f)
+        if(_playerDistance > _maximumChaseRange)
         {
             _enemyState = EnemyState.Roaming;
+            AttackDone();
+            SetMoveSpeed(3f);
         }
     }
 
@@ -133,24 +123,28 @@ public class EnemyController : LivingObjects
     private void SetEnemyData()
     {
         _mapHandler = GameObject.FindGameObjectWithTag("Tilemap").GetComponent<MapHandler>();
+        SetMoveSpeed(3f);
         _enemyData = _mapHandler.EnemyData;
         lastPosition = _rb.position;
+        _hitPrefab.SetDamage(EnemyData.Damage);
         TilemapRenderer tilemapRenderer = GameObject.FindGameObjectWithTag("Tilemap").GetComponent<TilemapRenderer>();
         _tilemapBounds = tilemapRenderer.bounds;
         _boxCollider = GetComponent<BoxCollider2D>();
         _renderer = GetComponent<Renderer>();
         _playerCharacterData = GameManager.instance.PlayerCharacterData;
         this.GetComponent<SpriteRenderer>().sprite = _enemyData.StartingSprite;
-        _objectAnimator.runtimeAnimatorController = _enemyData.AnimatorController;
-        _hp = _enemyData.HP;
+        _actorAnimator.runtimeAnimatorController = _enemyData.AnimatorController;
+        _currentHP = _enemyData.HP;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _enemyState = EnemyState.Roaming;
+        _hitPrefab.SetDamage(_enemyData.Damage);
     }
 
     private void SetMoveSpeed(float speed)
     {
         _moveSpeed = speed;
     }
+   
 
     private void SetRandomDirection()
     {
@@ -173,9 +167,10 @@ public class EnemyController : LivingObjects
         }
     }
 
+
     private void CheckHP()
     {
-        if(_hp > 0)
+        if(_currentHP > 0)
         {
             return;
         }
@@ -243,15 +238,21 @@ public class EnemyController : LivingObjects
     {
         int totalDamage = (int)(damageReceive - (_enemyData.Defence * .3));
         DamagePopUp(totalDamage);
-       _hp =_hp - totalDamage;
-        _moveSpeed = 3f;
+       _currentHP =_currentHP - totalDamage;
+        SetMoveSpeed(3f);
+    }
+
+    public void SetHitPrefab()
+    {
+        _hitPrefab.transform.position = _playerTransform.position;
+        _hitPrefab.gameObject.SetActive(true);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.tag == "Weapon")
         {
-            PlayOneShot(1f,_enemyData.HitSFX);
+            PlayOneShot(1f,_enemyData.OnHitSFX);
             _moveSpeed = 0f;
             int damageReceive = (int)_playerCharacterData.AttackPower;
             CalculateDamageRecieve(damageReceive);
@@ -260,8 +261,7 @@ public class EnemyController : LivingObjects
 
         if(col.gameObject.tag == "Player")
         {
-            _enemyState = EnemyState.Attacking;
-            Debug.Log("Attacking");
+            SetAttack(EnemyData.AttackSFX);
         }
     }
 }

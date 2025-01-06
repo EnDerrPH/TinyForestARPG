@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   _characterClass: 0
-  _animatorController: {fileID: 22100000, guid: d0ea4880769cbbe4496c1e31b0466fdb, type: 2}
-  _characterHitPrefab: {fileID: 1053372128219707650, guid: 97185a05de2fc344d86d5fbb7b868ef3, type: 3}
+  _animatorController: {fileID: 22100000, guid: c55968e3a00b8c648bb0edd4fc0b1ddd, type: 2}
+  _hitPrefab: {fileID: -3867401056045561862, guid: 97185a05de2fc344d86d5fbb7b868ef3, type: 3}
   _description: A long range character that has high Damage but average in defense.
   _characterLevel: 1
   _statPoints: 0
   _skillPoints: 0
   _currentExperience: 0
   _nextLevelExperience: 300
-  _characterHP: 50
+  _characterHP: 500
   _characterStrength: 10
   _characterVitality: 1
   _characterLuck: 10
@@ -34,3 +34,4 @@ MonoBehaviour:
   _dashSFX: {fileID: 8300000, guid: d004d6aec45096c4d92c70c62daab23d, type: 3}
   _step1SFX: {fileID: 8300000, guid: 39cd0b4a0b53b9746891007dfecd673f, type: 3}
   _step2SFX: {fileID: 8300000, guid: 351758301403c4a43ba097600f4f9d0a, type: 3}
+  _onHitSFX: {fileID: 8300000, guid: 9626347beb37c1f4f914c6e66705b78d, type: 3}
