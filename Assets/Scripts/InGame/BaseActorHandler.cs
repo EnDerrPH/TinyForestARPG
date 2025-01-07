@@ -7,7 +7,7 @@ public class BaseActorHandler : MonoBehaviour
     [SerializeField] protected float _moveSpeed;
     protected CharacterData _characterData;
     protected AudioSource _audioSource;
-    [SerializeField] protected int _currentHP;
+    protected int _currentHP;
     protected Animator _actorAnimator;
     protected Rigidbody2D _rb;
     protected Vector3 _moveInput;

@@ -21,7 +21,7 @@ MonoBehaviour:
   _skillPoints: 0
   _currentExperience: 0
   _nextLevelExperience: 300
-  _characterHP: 100
+  _characterHP: 300
   _characterStrength: 7
   _characterVitality: 10
   _characterLuck: 1
@@ -34,3 +34,4 @@ MonoBehaviour:
   _dashSFX: {fileID: 8300000, guid: d004d6aec45096c4d92c70c62daab23d, type: 3}
   _step1SFX: {fileID: 8300000, guid: 39cd0b4a0b53b9746891007dfecd673f, type: 3}
   _step2SFX: {fileID: 8300000, guid: 351758301403c4a43ba097600f4f9d0a, type: 3}
+  _onHitSFX: {fileID: 0}

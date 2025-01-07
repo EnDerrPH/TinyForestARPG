@@ -31,6 +31,7 @@ public enum SkillClass
 
 public enum SkillType
 {
+    NormalAttack,
     Dash,
     DoubleStrafe,
     Multishot,

@@ -221,6 +221,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1838012312835545407, guid: 98bd39af8ae1f724aa736c57768b7ad8, type: 3}
   m_PrefabInstance: {fileID: 41113915}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &57236733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57236734}
+  - component: {fileID: 57236736}
+  - component: {fileID: 57236735}
+  m_Layer: 5
+  m_Name: Header
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &57236734
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57236733}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745490623}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 251, y: -116}
+  m_SizeDelta: {x: 500, y: 230}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &57236735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57236733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 0.32156864}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 1b4561da9e1692b42bf06883c5a8458d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &57236736
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57236733}
+  m_CullTransparentMesh: 1
 --- !u!1 &98198048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,7 +1394,7 @@ PrefabInstance:
     - target: {fileID: 6505211151797942561, guid: 3e663514d3220e3478f6aef862e55cc8, type: 3}
       propertyPath: _skill
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 275e4d1310edf0847a5028ab2df5bf27, type: 2}
     - target: {fileID: 6505211151797942561, guid: 3e663514d3220e3478f6aef862e55cc8, type: 3}
       propertyPath: _skillSlotType
       value: 1
@@ -1509,6 +1584,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 309012675}
     m_Modifications:
+    - target: {fileID: 843600225, guid: e5b8cc2c95ef0874a85ac0e8728aab8d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: d34d9488b544f784ca7c6b68517a7295, type: 2}
+    - target: {fileID: 843600226, guid: e5b8cc2c95ef0874a85ac0e8728aab8d, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 843600226, guid: e5b8cc2c95ef0874a85ac0e8728aab8d, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 843600226, guid: e5b8cc2c95ef0874a85ac0e8728aab8d, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 843600226, guid: e5b8cc2c95ef0874a85ac0e8728aab8d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 843600226, guid: e5b8cc2c95ef0874a85ac0e8728aab8d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1528613424989497673, guid: e5b8cc2c95ef0874a85ac0e8728aab8d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.43
@@ -1685,6 +1784,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 57236734}
   - {fileID: 8931507133957241504}
   - {fileID: 2287922399658244678}
   - {fileID: 944703489}
