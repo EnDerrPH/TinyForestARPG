@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HitPrefabHandler : MonoBehaviour
 {
-    [SerializeField] private int _damage;
+    private int _damage;
 
     public int Damage { get => _damage; set { _damage = value; } }
 

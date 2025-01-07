@@ -149,10 +149,10 @@ public class CharacterController : BaseActorHandler
 
     private void PlayFootstepSound()
     {
-        if (!_audioSource.isPlaying)  // Ensure the previous step sound isn't still playing
+        if (!_audioSource.isPlaying)
         {
-            // Alternate between the two step sounds
-            if (Random.value > 0.5f)  // Randomly choose the clip to play
+
+            if (Random.value > 0.5f)
             {
                 _audioSource.clip = _characterData.Step1SFX;
             }

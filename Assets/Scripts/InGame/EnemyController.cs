@@ -25,7 +25,7 @@ public class EnemyController : BaseActorHandler
     private float _dissolveTimer = .7f;
     private Renderer _renderer;
     private PlayerCharacterData _playerCharacterData;
-    [SerializeField] private EnemyState _enemyState;
+    private EnemyState _enemyState;
     public UnityEvent OnDeathEvent;
     public EnemyData EnemyData { get => _enemyData; set { _enemyData = value; } }
 

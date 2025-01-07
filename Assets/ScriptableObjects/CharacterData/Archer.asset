@@ -21,7 +21,7 @@ MonoBehaviour:
   _skillPoints: 0
   _currentExperience: 0
   _nextLevelExperience: 300
-  _characterHP: 500
+  _characterHP: 300
   _characterStrength: 10
   _characterVitality: 1
   _characterLuck: 10

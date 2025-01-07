@@ -55,10 +55,7 @@ public class UIGameHandler : UIHandler
 
     private void UpdateHealth()
     {
-        Debug.Log(_characterController.CurrentHP);
-        Debug.Log(_playerCharacterData.MaxHP);
         float health = ((float)_characterController.CurrentHP / (float)_playerCharacterData.MaxHP);
-        Debug.Log(health);
         _hpFillBar.fillAmount = health;
     }
 

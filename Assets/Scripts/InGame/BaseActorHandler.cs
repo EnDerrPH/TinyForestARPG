@@ -11,7 +11,7 @@ public class BaseActorHandler : MonoBehaviour
     protected Animator _actorAnimator;
     protected Rigidbody2D _rb;
     protected Vector3 _moveInput;
-    [SerializeField]  protected ObjectAngle _objectAngle;
+    protected ObjectAngle _objectAngle;
     protected SortOrderUtilities _sortOrderUtilities;
     protected float _prefabOffsetPos = 1f;
     protected float _baseMoveSpeed = 8f;
